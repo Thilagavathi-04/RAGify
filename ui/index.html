@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG_AI — Intelligent Document Assistant</title>
+    <link rel="stylesheet" href="/ui/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+                <span class="logo-text">RAG_AI</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <button class="nav-btn active" data-view="chat">
+                <span class="nav-icon">💬</span> Ask Question
+            </button>
+            <button class="nav-btn" data-view="upload">
+                <span class="nav-icon">📤</span> Upload Document
+            </button>
+            <button class="nav-btn" data-view="documents">
+                <span class="nav-icon">📚</span> Documents
+            </button>
+            <button class="nav-btn" data-view="settings">
+                <span class="nav-icon">⚙️</span> Settings
+            </button>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- ============ CHAT VIEW ============ -->
+        <section class="view active" id="view-chat">
+            <div class="view-header">
+                <h1>Ask a Question</h1>
+                <p class="subtitle">Query your ingested documents using AI-powered retrieval</p>
+            </div>
+
+            <div class="chat-container" id="chatContainer">
+                <div class="welcome-message" id="welcomeMessage">
+                    <div class="welcome-icon">🔍</div>
+                    <h2>What would you like to know?</h2>
+                    <p>Ask any question about your uploaded documents. The AI will retrieve relevant context and generate an answer.</p>
+                    <div class="quick-tips">
+                        <div class="tip">💡 Tip: Select a document type for smarter retrieval</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <div class="input-row">
+                    <select id="docTypeSelect" class="doc-type-select">
+                        <option value="">Auto-detect type</option>
+                        <option value="pdf">📄 PDF</option>
+                        <option value="html">🌐 HTML</option>
+                        <option value="json">📋 JSON</option>
+                        <option value="email">📧 Email</option>
+                        <option value="image">🖼️ Image</option>
+                        <option value="audio">🎵 Audio</option>
+                    </select>
+                    <select id="sourceFilter" class="doc-type-select">
+                        <option value="">📂 All Documents</option>
+                    </select>
+                    <select id="llmProviderSelect" class="doc-type-select">
+                        <option value="">🤖 Auto LLM</option>
+                        <option value="ollama">🏠 Ollama (Local)</option>
+                        <option value="groq">⚡ Groq (Cloud)</option>
+                    </select>
+                    <select id="llmModelSelect" class="doc-type-select" style="display:none;">
+                    </select>
+                    <div class="input-wrapper">
+                        <textarea id="questionInput" placeholder="Type your question here..." rows="1"></textarea>
+                        <button id="sendBtn" class="send-btn" title="Send">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ UPLOAD VIEW ============ -->
+        <section class="view" id="view-upload">
+            <div class="view-header">
+                <h1>Upload Document</h1>
+                <p class="subtitle">Upload files to ingest into the RAG pipeline</p>
+            </div>
+
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-zone" id="dropZone">
+                    <div class="upload-icon">📁</div>
+                    <h3>Drag & drop your file here</h3>
+                    <p>or click to browse</p>
+                    <input type="file" id="fileInput" hidden>
+                    <div class="supported-types">
+                        Supported: PDF, HTML, JSON, EML, Images (PNG, JPG), Audio (WAV, MP3)
+                    </div>
+                </div>
+
+                <div class="upload-progress" id="uploadProgress" style="display: none;">
+                    <div class="progress-file-name" id="progressFileName"></div>
+                    <div class="progress-bar-wrapper">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <div class="progress-status" id="progressStatus">Uploading...</div>
+                </div>
+
+                <div class="upload-result" id="uploadResult" style="display: none;"></div>
+            </div>
+
+            <div class="upload-history" id="uploadHistory">
+                <h3>Recent Uploads</h3>
+                <div class="history-list" id="historyList">
+                    <p class="empty-state">No files uploaded yet</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ DOCUMENTS VIEW ============ -->
+        <section class="view" id="view-documents">
+            <div class="view-header">
+                <h1>Ingested Documents</h1>
+                <p class="subtitle">All documents currently in the knowledge base</p>
+            </div>
+
+            <div class="documents-toolbar">
+                <button class="refresh-btn" id="refreshDocsBtn">🔄 Refresh</button>
+                <span class="doc-count" id="docCount">Loading...</span>
+            </div>
+
+            <div class="documents-grid" id="documentsGrid">
+                <div class="loading-spinner">Loading documents...</div>
+            </div>
+        </section>
+
+        <!-- ============ SETTINGS VIEW ============ -->
+        <section class="view" id="view-settings">
+            <div class="view-header">
+                <h1>Settings</h1>
+                <p class="subtitle">Configure LLM providers and API keys</p>
+            </div>
+
+            <div class="settings-container">
+                <!-- Provider Status -->
+                <div class="settings-card">
+                    <h3>🤖 LLM Providers</h3>
+                    <div class="provider-status" id="providerStatus">
+                        Loading...
+                    </div>
+                </div>
+
+                <!-- Groq API Key -->
+                <div class="settings-card">
+                    <h3>⚡ Groq API Key</h3>
+                    <p class="settings-desc">Get your free API key at <a href="https://console.groq.com/keys" target="_blank">console.groq.com/keys</a></p>
+                    <div class="settings-input-row">
+                        <input type="password" id="groqApiKeyInput" class="settings-input" placeholder="gsk_xxxxxxxxxxxxxxxx">
+                        <button id="saveGroqKeyBtn" class="settings-save-btn">💾 Save</button>
+                    </div>
+                    <div class="settings-result" id="settingsResult" style="display:none;"></div>
+                </div>
+
+                <!-- Model Info -->
+                <div class="settings-card">
+                    <h3>📋 Available Models</h3>
+                    <div id="modelsList">Loading...</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="/ui/app.js"></script>
+</body>
+</html>

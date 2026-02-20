@@ -1,0 +1,27 @@
+[project]
+name = "rag_ai"
+version = "0.1.0"
+description = "A Retrieval-Augmented Generation system supporting multi-format document ingestion with local LLMs via Ollama"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "faiss-cpu",
+    "ollama",
+    "PyPDF2",
+    "beautifulsoup4",
+    "lxml",
+    "pytesseract",
+    "Pillow",
+    "openai-whisper",
+    "torch",
+    "python-dotenv",
+    "tqdm",
+    "fastapi",
+    "uvicorn",
+    "python-multipart",
+    "langchain",
+    "langchain-core",
+    "langchain-ollama",
+    "langchain-community",
+]

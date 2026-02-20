@@ -1,0 +1,62 @@
+{
+    "company": "TechVision AI Solutions",
+    "founded": "2019",
+    "headquarters": "Bangalore, India",
+    "ceo": "Priya Sharma",
+    "employees": 450,
+    "revenue_2025": "$28.5 million",
+    "products": [
+        {
+            "name": "VisionDetect Pro",
+            "category": "Computer Vision",
+            "price": "$299/month",
+            "description": "Real-time object detection and tracking system for manufacturing quality control. Uses YOLOv8 architecture with custom-trained models achieving 99.2% accuracy on defect detection.",
+            "customers": 120,
+            "launch_date": "2021-03"
+        },
+        {
+            "name": "TextMind NLP",
+            "category": "Natural Language Processing",
+            "price": "$199/month",
+            "description": "Multi-language document understanding platform supporting 45 languages. Includes named entity recognition, sentiment analysis, text classification, and summarization capabilities.",
+            "customers": 85,
+            "launch_date": "2022-01"
+        },
+        {
+            "name": "PredictFlow",
+            "category": "Predictive Analytics",
+            "price": "$449/month",
+            "description": "Time-series forecasting engine for demand planning and inventory optimization. Combines LSTM networks with traditional statistical methods for hybrid forecasting.",
+            "customers": 65,
+            "launch_date": "2023-06"
+        },
+        {
+            "name": "AutoML Studio",
+            "category": "Machine Learning Platform",
+            "price": "$599/month",
+            "description": "No-code machine learning platform that automates model selection, hyperparameter tuning, and deployment. Supports tabular, image, and text data types.",
+            "customers": 200,
+            "launch_date": "2024-02"
+        }
+    ],
+    "tech_stack": {
+        "languages": ["Python", "Rust", "TypeScript"],
+        "frameworks": ["PyTorch", "FastAPI", "React", "ONNX Runtime"],
+        "infrastructure": ["AWS", "Kubernetes", "PostgreSQL", "Redis", "FAISS"],
+        "mlops": ["MLflow", "DVC", "Weights & Biases", "GitHub Actions"]
+    },
+    "offices": [
+        {"city": "Bangalore", "country": "India", "employees": 300},
+        {"city": "San Francisco", "country": "USA", "employees": 80},
+        {"city": "London", "country": "UK", "employees": 70}
+    ],
+    "investors": [
+        {"name": "Sequoia Capital India", "round": "Series A", "amount": "$8 million", "year": 2021},
+        {"name": "Accel Partners", "round": "Series B", "amount": "$22 million", "year": 2023}
+    ],
+    "awards": [
+        "Best AI Startup 2023 - NASSCOM",
+        "Top 50 AI Companies in India - Analytics India Magazine 2024",
+        "Google Cloud Partner of the Year 2024"
+    ]
+}
