@@ -341,7 +341,3 @@ curl http://localhost:8000/strategies
 ```
 
 ---
-
-## 📄 License
-
-This project is for educational and personal use.
