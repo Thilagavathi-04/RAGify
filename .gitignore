@@ -29,6 +29,7 @@ Thumbs.db
 .vscode/
 .idea/
 
+
 # uv / package manager
 uv.lock
 .python-version

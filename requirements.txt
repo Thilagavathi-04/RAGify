@@ -22,3 +22,5 @@ langchain-experimental
 langchain-text-splitters
 streamlit
 groq
+python-docx
+python-pptx

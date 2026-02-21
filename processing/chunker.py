@@ -28,6 +28,13 @@ DEFAULT_STRATEGY_MAP = {
     "email": "section",
     "image": "line",
     "audio": "sentence",
+    "docx": "paragraph",
+    "pptx": "section",
+    "txt": "sentence",
+    "markdown": "paragraph",
+    "xml": "key_value",
+    "csv": "line",
+    "sqlite": "line",
 }
 
 

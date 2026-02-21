@@ -1,6 +1,6 @@
 # 📋 RAG_AI — Retrieval-Augmented Generation System
 
-A modular **RAG (Retrieval-Augmented Generation)** pipeline built in Python. It ingests documents from **6 formats**, applies **8 smart chunking strategies**, stores them in a **FAISS vector database**, and answers questions using a **hybrid LLM layer** (local Ollama + cloud Groq with automatic fallback).
+A modular **RAG (Retrieval-Augmented Generation)** pipeline built in Python. It ingests documents from **13 formats**, applies **8 smart chunking strategies**, stores them in a **FAISS vector database**, and answers questions using a **hybrid LLM layer** (local Ollama + cloud Groq with automatic fallback).
 
 Comes with a **Streamlit UI** and a **FastAPI REST API**.
 
@@ -14,7 +14,7 @@ Comes with a **Streamlit UI** and a **FastAPI REST API**.
 
 ## ✨ Features
 
-- **Multi-format ingestion** — PDF, HTML, JSON, Email (.eml), Image (OCR), Audio (Whisper)
+- **Multi-format ingestion - Total 13 formats** — PDF, Word (.docx), PowerPoint (.pptx), TXT, Markdown, HTML, JSON, XML, CSV, SQLite, Email (.eml), Image (OCR), Audio (Whisper)
 - **8 chunking strategies** — 5 custom (sentence, paragraph, key-value, section, line) + 3 LangChain-based (semantic, character, recursive) — auto-selected per document type
 - **4 retrieval strategies** — Cosine similarity, MMR, BM25 keyword search, and Hybrid Fusion — auto-routed by doc type with `type_filter` support
 - **Hybrid LLM** — Ollama (local, free) + Groq (cloud, fast) with per-query provider selection and automatic fallback
@@ -39,8 +39,8 @@ Comes with a **Streamlit UI** and a **FastAPI REST API**.
 ### 1. Clone & Install
 
 ```bash
-git clone https://github.com/<your-username>/RAG_AI.git
-cd RAG_AI
+git clone https://github.com/Thilagavathi-04/RAGify.git
+cd RAGify
 python -m venv venv
 source venv/bin/activate    # Linux/Mac
 pip install -r requirements.txt
@@ -127,15 +127,21 @@ Open 🔗 **[http://localhost:8000](http://localhost:8000)** for the HTML/JS UI,
 
 ### Module Breakdown
 
-#### 📁 `ingestion/` — Document Loaders (6 formats)
+#### 📁 `ingestion/` — Document Loaders (13 formats)
 
 | File | Format | Library |
 |---|---|---|
 | `pdf_loader.py` | `.pdf` | PyPDF2 |
+| `docx_loader.py` | `.docx` | python-docx |
+| `pptx_loader.py` | `.pptx` | python-pptx |
+| `txt_loader.py` | `.txt`, `.md` | stdlib |
 | `html_loader.py` | `.html` | BeautifulSoup4 |
-| `ocr_loader.py` | `.png`, `.jpg`, `.jpeg` | Pytesseract + Pillow |
 | `json_loader.py` | `.json` | stdlib `json` |
+| `xml_loader.py` | `.xml` | stdlib `xml.etree` |
+| `csv_loader.py` | `.csv` | stdlib `csv` |
+| `sqlite_loader.py` | `.db`, `.sqlite`, `.sqlite3` | stdlib `sqlite3` |
 | `email_loader.py` | `.eml` | stdlib `email` |
+| `ocr_loader.py` | `.png`, `.jpg`, `.jpeg` | Pytesseract + Pillow |
 | `audio_loader.py` | `.mp3`, `.wav`, `.m4a`, `.flac`, `.ogg` | OpenAI Whisper |
 
 #### 📁 `processing/` — Text Processing (4 modules)
@@ -152,8 +158,15 @@ Open 🔗 **[http://localhost:8000](http://localhost:8000)** for the HTML/JS UI,
 | Doc Type | Strategy | Why |
 |---|---|---|
 | `pdf` | Sentence | Well-structured prose with punctuation |
+| `docx` | Paragraph | Word documents have natural paragraph structure |
+| `pptx` | Section | Slides split by headers/titles |
+| `txt` | Sentence | Plain text prose |
+| `markdown` | Paragraph | Markdown has natural paragraph breaks |
 | `html` | Paragraph | Natural `\n\n` paragraph breaks |
 | `json` | Key-value | Each top-level key → one chunk |
+| `xml` | Key-value | Tagged structured data |
+| `csv` | Line | Each row is a natural unit |
+| `sqlite` | Line | Each database row is a natural unit |
 | `email` | Section | Headers / body / signature sections |
 | `image` | Line | OCR output has irregular lines |
 | `audio` | Sentence | Transcribed speech has natural sentences |
@@ -171,9 +184,9 @@ Plus 3 LangChain-based strategies available via API: **semantic** (embedding-bas
 
 | # | Strategy | Best For |
 |---|---|---|
-| 1 | **Cosine Similarity** | Natural prose (PDF, audio) |
-| 2 | **MMR** (Maximal Marginal Relevance) | Redundant content (HTML, email) |
-| 3 | **BM25 Keyword Search** | Structured data (JSON) |
+| 1 | **Cosine Similarity** | Natural prose (PDF, Word, TXT, Markdown, audio) |
+| 2 | **MMR** (Maximal Marginal Relevance) | Redundant content (HTML, email, PowerPoint) |
+| 3 | **BM25 Keyword Search** | Structured data (JSON, XML, CSV, SQLite) |
 | 4 | **Hybrid Fusion** (vector + cosine + BM25) | Noisy content (OCR/image), general queries |
 
 Auto-routed by `doc_type` with `type_filter` pre-filtering to avoid cross-type noise.
@@ -224,10 +237,16 @@ RAG_AI/
 │
 ├── ingestion/
 │   ├── pdf_loader.py          # PDF → text
+│   ├── docx_loader.py         # Word (.docx) → text
+│   ├── pptx_loader.py         # PowerPoint (.pptx) → text
+│   ├── txt_loader.py          # TXT / Markdown → text
 │   ├── html_loader.py         # HTML → text
-│   ├── ocr_loader.py          # Image → text (OCR)
 │   ├── json_loader.py         # JSON → text
+│   ├── xml_loader.py          # XML → text
+│   ├── csv_loader.py          # CSV → text
+│   ├── sqlite_loader.py       # SQLite DB → text
 │   ├── email_loader.py        # .eml → text
+│   ├── ocr_loader.py          # Image → text (OCR)
 │   └── audio_loader.py        # Audio → text (Whisper)
 │
 ├── processing/
@@ -276,7 +295,12 @@ RAG_AI/
 | Metadata DB | SQLite |
 | Orchestration | LangChain |
 | PDF | PyPDF2 |
+| Word | python-docx |
+| PowerPoint | python-pptx |
 | HTML | BeautifulSoup4 |
+| XML | stdlib xml.etree |
+| CSV | stdlib csv |
+| SQLite | stdlib sqlite3 |
 | OCR | Pytesseract + Pillow |
 | Audio | OpenAI Whisper |
 
@@ -318,3 +342,6 @@ curl http://localhost:8000/strategies
 
 ---
 
+## 📄 License
+
+This project is for educational and personal use.

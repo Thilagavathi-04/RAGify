@@ -1,0 +1,11 @@
+RAG_AI Sample Text Document
+
+Retrieval-Augmented Generation (RAG) is a technique that combines information retrieval with language model generation. Instead of relying solely on the model's training data, RAG fetches relevant documents from a knowledge base and uses them as context to generate more accurate and grounded responses.
+
+Key benefits of RAG include:
+- Reduced hallucination by grounding answers in retrieved documents.
+- The ability to update knowledge without retraining the model.
+- Transparency through source citations.
+- Support for domain-specific question answering.
+
+This plain text file is used to test the TXT ingestion loader in the RAG_AI pipeline.

@@ -1,0 +1,11 @@
+id,name,department,role,salary,hire_date,city
+1,Alice Johnson,Research,Lead AI Engineer,145000,2023-01-15,San Francisco
+2,Bob Smith,Engineering,Backend Developer,120000,2023-03-22,New York
+3,Carol Williams,Research,Data Scientist,135000,2023-06-10,San Francisco
+4,David Brown,Engineering,Frontend Developer,115000,2023-09-01,Austin
+5,Eve Davis,Marketing,Marketing Manager,110000,2024-01-08,Chicago
+6,Frank Miller,Engineering,DevOps Engineer,125000,2024-02-14,Seattle
+7,Grace Lee,Research,ML Engineer,140000,2024-04-20,San Francisco
+8,Henry Wilson,Sales,Account Executive,95000,2024-06-01,New York
+9,Ivy Chen,Research,NLP Researcher,150000,2024-07-15,San Francisco
+10,Jack Taylor,Engineering,Full Stack Developer,130000,2024-09-10,Austin

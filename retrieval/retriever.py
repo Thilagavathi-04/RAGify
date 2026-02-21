@@ -16,9 +16,16 @@ class Retriever:
     Routing by doc_type:
       - pdf       → Cosine Similarity (prose with proper sentences)
       - audio     → Cosine Similarity (transcribed natural speech)
+      - docx      → Cosine Similarity (Word docs — structured prose)
+      - txt       → Cosine Similarity (plain text prose)
+      - markdown  → Cosine Similarity (Markdown notes)
       - html      → MMR (web pages have redundant sections, need diversity)
       - email     → MMR (headers/signatures repeat, need diverse body chunks)
+      - pptx      → MMR (slides have repetitive headers/footers)
       - json      → BM25 Keyword (structured data needs exact term matches)
+      - xml       → BM25 Keyword (tagged structured data)
+      - csv       → BM25 Keyword (tabular row-based data)
+      - sqlite    → BM25 Keyword (database table rows)
       - image     → Hybrid Fusion (noisy OCR benefits from all signals)
       - default   → Hybrid Fusion (balanced approach for unknown types)
     """
@@ -62,6 +69,18 @@ class Retriever:
         elif doc_type == "audio":
             results = self.hybrid.retrieve_cosine(query, fetch_k, type_filter="audio")
 
+        # Word docs → Cosine Similarity (structured prose)
+        elif doc_type == "docx":
+            results = self.hybrid.retrieve_cosine(query, fetch_k, type_filter="docx")
+
+        # Plain text → Cosine Similarity
+        elif doc_type == "txt":
+            results = self.hybrid.retrieve_cosine(query, fetch_k, type_filter="txt")
+
+        # Markdown → Cosine Similarity
+        elif doc_type == "markdown":
+            results = self.hybrid.retrieve_cosine(query, fetch_k, type_filter="markdown")
+
         # HTML → MMR (web pages have redundant boilerplate, need diversity)
         elif doc_type == "html":
             results = self.hybrid.retrieve_mmr(query, fetch_k, lambda_param=0.7, type_filter="html")
@@ -70,9 +89,25 @@ class Retriever:
         elif doc_type == "email":
             results = self.hybrid.retrieve_mmr(query, fetch_k, lambda_param=0.6, type_filter="email")
 
+        # PowerPoint → MMR (slides have repetitive headers/footers)
+        elif doc_type == "pptx":
+            results = self.hybrid.retrieve_mmr(query, fetch_k, lambda_param=0.7, type_filter="pptx")
+
         # JSON → BM25 Keyword (structured data needs exact key/value matches)
         elif doc_type == "json":
             results = self.hybrid.retrieve_bm25(query, fetch_k, type_filter="json")
+
+        # XML → BM25 Keyword (tagged structured data)
+        elif doc_type == "xml":
+            results = self.hybrid.retrieve_bm25(query, fetch_k, type_filter="xml")
+
+        # CSV → BM25 Keyword (tabular row-based data)
+        elif doc_type == "csv":
+            results = self.hybrid.retrieve_bm25(query, fetch_k, type_filter="csv")
+
+        # SQLite → BM25 Keyword (database table rows)
+        elif doc_type == "sqlite":
+            results = self.hybrid.retrieve_bm25(query, fetch_k, type_filter="sqlite")
 
         # Image → Hybrid Fusion (noisy OCR benefits from all signals)
         elif doc_type == "image":

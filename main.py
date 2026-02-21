@@ -13,12 +13,17 @@ logger = logging.getLogger(__name__)
 # -----------------------------
 # Ingestion Loaders
 # -----------------------------
+# Ingestion Loaders (imported lazily inside route_loader)
+# -----------------------------
 from ingestion.pdf_loader import load_pdf
 from ingestion.html_loader import load_html
 from ingestion.ocr_loader import load_image
 from ingestion.json_loader import load_json
 from ingestion.email_loader import load_email
 from ingestion.audio_loader import load_audio
+from ingestion.txt_loader import load_txt
+from ingestion.xml_loader import load_xml
+from ingestion.csv_loader import load_csv
 
 # -----------------------------
 # Processing
@@ -77,6 +82,27 @@ def route_loader(file_path: str) -> List[Dict]:
 
     elif ext in [".mp3", ".wav", ".m4a", ".flac", ".ogg"]:
         return load_audio(file_path)
+
+    elif ext == ".docx":
+        from ingestion.docx_loader import load_docx
+        return load_docx(file_path)
+
+    elif ext == ".pptx":
+        from ingestion.pptx_loader import load_pptx
+        return load_pptx(file_path)
+
+    elif ext in [".txt", ".md"]:
+        return load_txt(file_path)
+
+    elif ext == ".xml":
+        return load_xml(file_path)
+
+    elif ext == ".csv":
+        return load_csv(file_path)
+
+    elif ext in [".db", ".sqlite", ".sqlite3"]:
+        from ingestion.sqlite_loader import load_sqlite
+        return load_sqlite(file_path)
 
     else:
         raise ValueError(f"Unsupported file format: {ext}")

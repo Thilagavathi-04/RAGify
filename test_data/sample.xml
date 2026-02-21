@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<company>
+    <name>RAG Systems Inc.</name>
+    <founded>2024</founded>
+    <industry>Artificial Intelligence</industry>
+    <employees>
+        <employee id="1">
+            <name>Alice Johnson</name>
+            <role>Lead AI Engineer</role>
+            <department>Research</department>
+            <salary currency="USD">145000</salary>
+        </employee>
+        <employee id="2">
+            <name>Bob Smith</name>
+            <role>Backend Developer</role>
+            <department>Engineering</department>
+            <salary currency="USD">120000</salary>
+        </employee>
+        <employee id="3">
+            <name>Carol Williams</name>
+            <role>Data Scientist</role>
+            <department>Research</department>
+            <salary currency="USD">135000</salary>
+        </employee>
+    </employees>
+    <products>
+        <product>
+            <name>RAGify</name>
+            <version>1.0</version>
+            <description>A modular retrieval-augmented generation pipeline supporting 13 document formats</description>
+            <price currency="USD">0</price>
+            <license>Open Source</license>
+        </product>
+        <product>
+            <name>VectorSearch Pro</name>
+            <version>2.3</version>
+            <description>Enterprise-grade vector similarity search engine with FAISS backend</description>
+            <price currency="USD">499</price>
+            <license>Commercial</license>
+        </product>
+    </products>
+</company>

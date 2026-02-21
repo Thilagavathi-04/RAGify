@@ -47,8 +47,7 @@ vector_store, sql_store, retriever, rag_chain = init_stores()
 # Page config
 # ─────────────────────────────────────
 st.set_page_config(
-    page_title="RAG_AI — Intelligent Document Assistant",
-    page_icon="🧠",
+    page_title="RAG APPLICATION — Intelligent Document Assistant",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -108,7 +107,7 @@ if "chat_history" not in st.session_state:
 # Sidebar navigation
 # ─────────────────────────────────────
 with st.sidebar:
-    st.markdown("## 🧠 RAG_AI")
+    st.markdown("## RAG APPLICATION")
     st.caption("Intelligent Document Assistant")
     st.divider()
 
@@ -117,6 +116,22 @@ with st.sidebar:
         ["💬 Ask Question", "📤 Upload Document", "📚 Documents", "⚙️ Settings"],
         label_visibility="collapsed",
     )
+
+    st.divider()
+    st.markdown("##### 📂 Supported Formats")
+    st.caption("📄 PDF — Documents, reports")
+    st.caption("📝 Word (.docx)")
+    st.caption("📊 PowerPoint (.pptx)")
+    st.caption("📃 TXT — Plain text")
+    st.caption("📑 Markdown (.md)")
+    st.caption("🌐 HTML — Web pages")
+    st.caption("📋 JSON — Structured data")
+    st.caption("🏷️ XML — Tagged data")
+    st.caption("📈 CSV — Tabular data")
+    st.caption("🗄️ SQLite — Databases")
+    st.caption("📧 EML — Email messages")
+    st.caption("🖼️ PNG/JPG — Images (OCR)")
+    st.caption("🎵 WAV/MP3 — Audio files")
 
 
 # ═════════════════════════════════════
@@ -131,7 +146,8 @@ if page == "💬 Ask Question":
     with col1:
         doc_type = st.selectbox(
             "Document Type",
-            ["Auto-detect", "pdf", "html", "json", "email", "image", "audio"],
+            ["Auto-detect", "pdf", "html", "json", "email", "image", "audio",
+             "docx", "pptx", "txt", "markdown", "xml", "csv", "sqlite"],
             index=0,
         )
     with col2:
@@ -233,8 +249,10 @@ elif page == "📤 Upload Document":
 
     uploaded_file = st.file_uploader(
         "Choose a file",
-        type=["pdf", "html", "json", "eml", "png", "jpg", "jpeg", "wav", "mp3"],
-        help="Supported: PDF, HTML, JSON, EML, Images (PNG, JPG), Audio (WAV, MP3)",
+        type=["pdf", "html", "json", "eml", "png", "jpg", "jpeg", "wav", "mp3",
+              "docx", "pptx", "txt", "md", "xml", "csv", "db", "sqlite", "sqlite3"],
+        help="Supported: PDF, Word, PPT, TXT, Markdown, HTML, JSON, XML, CSV, "
+             "SQLite, EML, Images (PNG, JPG), Audio (WAV, MP3)",
     )
 
     if uploaded_file is not None:
@@ -257,19 +275,6 @@ elif page == "📤 Upload Document":
 
                 except Exception as e:
                     st.error(f"❌ Ingestion failed: {e}")
-
-    st.divider()
-    st.subheader("Supported File Types")
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.markdown("📄 **PDF** — Documents, reports")
-        st.markdown("🌐 **HTML** — Web pages")
-    with col2:
-        st.markdown("📋 **JSON** — Structured data")
-        st.markdown("📧 **EML** — Email messages")
-    with col3:
-        st.markdown("🖼️ **PNG/JPG** — Images (OCR)")
-        st.markdown("🎵 **WAV/MP3** — Audio files")
 
 
 # ═════════════════════════════════════

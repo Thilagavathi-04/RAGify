@@ -58,8 +58,15 @@
                     <select id="docTypeSelect" class="doc-type-select">
                         <option value="">Auto-detect type</option>
                         <option value="pdf">📄 PDF</option>
+                        <option value="docx">📝 Word</option>
+                        <option value="pptx">📊 PowerPoint</option>
+                        <option value="txt">📃 TXT</option>
+                        <option value="markdown">📑 Markdown</option>
                         <option value="html">🌐 HTML</option>
                         <option value="json">📋 JSON</option>
+                        <option value="xml">🏷️ XML</option>
+                        <option value="csv">📈 CSV</option>
+                        <option value="sqlite">🗄️ SQLite</option>
                         <option value="email">📧 Email</option>
                         <option value="image">🖼️ Image</option>
                         <option value="audio">🎵 Audio</option>
@@ -96,9 +103,10 @@
                     <div class="upload-icon">📁</div>
                     <h3>Drag & drop your file here</h3>
                     <p>or click to browse</p>
-                    <input type="file" id="fileInput" hidden>
+                    <input type="file" id="fileInput" hidden
+                           accept=".pdf,.docx,.pptx,.txt,.md,.html,.json,.xml,.csv,.db,.sqlite,.sqlite3,.eml,.png,.jpg,.jpeg,.wav,.mp3,.m4a,.flac,.ogg">
                     <div class="supported-types">
-                        Supported: PDF, HTML, JSON, EML, Images (PNG, JPG), Audio (WAV, MP3)
+                        Supported: PDF, Word, PPT, TXT, Markdown, HTML, JSON, XML, CSV, SQLite, EML, Images, Audio
                     </div>
                 </div>
 
